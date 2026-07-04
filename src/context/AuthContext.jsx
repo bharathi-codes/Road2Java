@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  onAuthStateChanged, 
-  signInWithRedirect, 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut 
+import {
+  onAuthStateChanged,
+  signInWithRedirect,
+  getRedirectResult,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut
 } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase';
 
@@ -15,6 +16,11 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Process any returning redirect result from Google Login
+    getRedirectResult(auth).catch((error) => {
+      console.error('Redirect Result Error:', error);
+    });
+
     // Listen for auth state changes
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);

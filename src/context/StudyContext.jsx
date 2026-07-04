@@ -46,7 +46,21 @@ export function StudyProvider({ children }) {
 
         if (docSnap.exists()) {
           const data = docSnap.data();
-          if (isMounted) setState(data);
+          if (isMounted) {
+            // Deep merge to prevent missing properties from crashing the app
+            setState({
+              ...INITIAL_STATE,
+              ...data,
+              streakData: {
+                ...INITIAL_STATE.streakData,
+                ...(data.streakData || {}),
+              },
+              completedDays: data.completedDays || {},
+              checklists: data.checklists || {},
+              notes: data.notes || [],
+              bookmarks: data.bookmarks || [],
+            });
+          }
         } else {
           // Initialize new user
           await setDoc(docRef, INITIAL_STATE);
