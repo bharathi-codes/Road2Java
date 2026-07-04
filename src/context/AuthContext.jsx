@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { 
   onAuthStateChanged, 
-  signInWithPopup, 
+  signInWithRedirect, 
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signOut 
@@ -24,7 +24,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const loginWithGoogle = () => {
-    return signInWithPopup(auth, googleProvider);
+    return signInWithRedirect(auth, googleProvider);
   };
 
   const loginWithEmail = (email, password) => {
