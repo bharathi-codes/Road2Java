@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import {
   onAuthStateChanged,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut
@@ -15,6 +16,15 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Process any returning redirect result from Google Login
+    getRedirectResult(auth).then((result) => {
+      if (result && result.user) {
+        setCurrentUser(result.user);
+      }
+    }).catch((error) => {
+      console.error('Redirect Result Error:', error);
+    });
+
     // Listen for auth state changes
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -24,7 +34,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const loginWithGoogle = () => {
-    return signInWithPopup(auth, googleProvider);
+    return signInWithRedirect(auth, googleProvider);
   };
 
   const loginWithEmail = (email, password) => {
