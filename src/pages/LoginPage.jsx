@@ -17,7 +17,7 @@ export default function LoginPage() {
       setError('');
       setLoading(true);
       await loginWithEmail(email, password);
-      navigate('/');
+      // Removed manual navigate('/') to let PublicRoute handle redirect naturally
     } catch (err) {
       console.error('Email Login Error:', err);
       setError(`Email Error: ${err.message}`);
@@ -31,7 +31,7 @@ export default function LoginPage() {
       setError('');
       setLoading(true);
       await loginWithGoogle();
-      navigate('/');
+      // Removed manual navigate('/')
     } catch (err) {
       console.error('Google Login Error:', err);
       setError(`Google Error: ${err.message}`);

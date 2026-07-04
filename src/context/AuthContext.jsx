@@ -17,7 +17,11 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     // Process any returning redirect result from Google Login
-    getRedirectResult(auth).catch((error) => {
+    getRedirectResult(auth).then((result) => {
+      if (result && result.user) {
+        setCurrentUser(result.user);
+      }
+    }).catch((error) => {
       console.error('Redirect Result Error:', error);
     });
 

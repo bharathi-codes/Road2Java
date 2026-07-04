@@ -21,7 +21,7 @@ export default function SignupPage() {
       setError('');
       setLoading(true);
       await signupWithEmail(email, password);
-      navigate('/');
+      // Removed manual navigate('/')
     } catch (err) {
       console.error('Email Signup Error:', err);
       setError(`Email Error: ${err.message}`);
@@ -35,7 +35,7 @@ export default function SignupPage() {
       setError('');
       setLoading(true);
       await loginWithGoogle();
-      navigate('/');
+      // Removed manual navigate('/')
     } catch (err) {
       console.error('Google Signup Error:', err);
       setError(`Google Error: ${err.message}`);
