@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS — Light Mode (Default)
+   ═══════════════════════════════════════════ */
+:root {
+  --surface-primary: #FFFFFF;
+  --surface-secondary: #FAFAFA;
+  --surface-tertiary: #F4F4F5;
+  --content-primary: #18181B; /* Zinc 900 */
+  --content-secondary: #52525B; /* Zinc 600 */
+  --content-muted: #A1A1AA; /* Zinc 400 */
+  --border-color: #E4E4E7; /* Zinc 200 */
+  --success-soft: #ECFDF5;
+  --warning-soft: #FFFBEB;
+  --accent-glow: transparent;
+  --code-bg: #F4F4F5;
+  --code-text: #18181B;
+  --scrollbar-thumb: #D4D4D8;
+  --scrollbar-track: transparent;
+}
+
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS — Dark Mode
+   ═══════════════════════════════════════════ */
+.dark {
+  --surface-primary: #09090B; /* Zinc 950 */
+  --surface-secondary: #18181B; /* Zinc 900 */
+  --surface-tertiary: #27272A; /* Zinc 800 */
+  --content-primary: #FAFAFA; /* Zinc 50 */
+  --content-secondary: #A1A1AA; /* Zinc 400 */
+  --content-muted: #52525B; /* Zinc 600 */
+  --border-color: #27272A; /* Zinc 800 */
+  --success-soft: #052E16;
+  --warning-soft: #451A03;
+  --accent-glow: transparent;
+  --code-bg: #18181B;
+  --code-text: #FAFAFA;
+  --scrollbar-thumb: #3F3F46;
+  --scrollbar-track: transparent;
+}
+
+/* ═══════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════ */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-surface-primary text-content-primary font-sans;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  /* Focus Styles - highly constrained and sharp */
+  *:focus-visible {
+    @apply outline-none ring-1 ring-content-primary ring-offset-1 ring-offset-surface-primary;
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--content-muted);
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-content-primary text-surface-primary;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   COMPONENT UTILITIES
+   ═══════════════════════════════════════════ */
+@layer components {
+  /* Minimalist Card instead of Glass Card */
+  .glass-card {
+    @apply bg-surface-primary border border-border rounded-xl shadow-card;
+  }
+
+  .reading-width {
+    @apply max-w-reading mx-auto;
+  }
+
+  /* Code Block Container */
+  .code-block {
+    background: var(--code-bg);
+    color: var(--code-text);
+    @apply border border-border rounded-lg p-5 overflow-x-auto font-mono text-sm leading-relaxed;
+  }
+
+  /* Difficulty Badges - muted */
+  .badge-very-easy {
+    @apply bg-surface-tertiary text-content-primary border border-border;
+  }
+
+  .badge-easy {
+    @apply bg-surface-tertiary text-content-primary border border-border;
+  }
+
+  .badge-medium {
+    @apply bg-surface-tertiary text-content-primary border border-border;
+  }
+
+  .badge-challenging {
+    @apply bg-surface-tertiary text-content-primary border border-border;
+  }
+
+  /* Animated Progress Bar - solid, no gradient */
+  .progress-fill {
+    @apply h-full bg-content-primary transition-all duration-500 ease-out;
+  }
+
+  /* Subtle Hover Lift - restrained */
+  .hover-lift {
+    @apply transition-all duration-150;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-[1px] shadow-card-hover;
+  }
+
+  /* Section Divider */
+  .section-divider {
+    @apply border-t border-border my-8;
+  }
+
+  /* Active Nav Indicator */
+  .nav-active {
+    @apply bg-surface-tertiary text-content-primary font-semibold;
+  }
+
+  /* Sticky Bottom Bar - solid background, strict border */
+  .sticky-bottom {
+    @apply sticky bottom-0 z-40 bg-surface-primary border-t border-border mt-auto;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS — Respect prefers-reduced-motion
+   ═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE BOTTOM NAV SAFE AREA
+   ═══════════════════════════════════════════ */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .mobile-nav {
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+}
