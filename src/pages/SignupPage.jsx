@@ -32,10 +32,12 @@ export default function SignupPage() {
 
   async function handleGoogleLogin() {
     try {
+      // Call Google Login immediately to preserve the browser's trusted user-gesture
+      await loginWithGoogle();
+      
+      // Update UI state only after the popup completes successfully
       setError('');
       setLoading(true);
-      await loginWithGoogle();
-      // Removed manual navigate('/')
     } catch (err) {
       console.error('Google Signup Error:', err);
       setError(`Google Error: ${err.message}`);
