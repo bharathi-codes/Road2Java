@@ -19,7 +19,8 @@ export default function LoginPage() {
       await loginWithEmail(email, password);
       navigate('/');
     } catch (err) {
-      setError('Failed to sign in. Please check your credentials.');
+      console.error('Email Login Error:', err);
+      setError(`Email Error: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -32,7 +33,8 @@ export default function LoginPage() {
       await loginWithGoogle();
       navigate('/');
     } catch (err) {
-      setError('Failed to sign in with Google.');
+      console.error('Google Login Error:', err);
+      setError(`Google Error: ${err.message}`);
     } finally {
       setLoading(false);
     }

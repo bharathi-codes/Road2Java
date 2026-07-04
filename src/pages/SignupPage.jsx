@@ -23,7 +23,8 @@ export default function SignupPage() {
       await signupWithEmail(email, password);
       navigate('/');
     } catch (err) {
-      setError('Failed to create an account. Email might be in use.');
+      console.error('Email Signup Error:', err);
+      setError(`Email Error: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -36,7 +37,8 @@ export default function SignupPage() {
       await loginWithGoogle();
       navigate('/');
     } catch (err) {
-      setError('Failed to sign up with Google.');
+      console.error('Google Signup Error:', err);
+      setError(`Google Error: ${err.message}`);
     } finally {
       setLoading(false);
     }
